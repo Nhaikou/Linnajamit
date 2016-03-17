@@ -21,7 +21,10 @@ public class PathedProjectile : MonoBehaviour
             return;
         }
 
+        Object.FindObjectOfType<TaikaMiekka>().NextDrop();
+
         Destroy(gameObject);
     }
+
 }
 

@@ -11,6 +11,7 @@ public class TaikaMiekka : MonoBehaviour {
 
     public GameObject dankaPrefab;
 
+    private bool dropping = false;
     private float lastDrop = 0.0f;
 	// Use this for initialization
 	void Start () {
@@ -18,14 +19,19 @@ public class TaikaMiekka : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if ((Time.time - lastDrop) > dropInterval)
+        if (dropping && (Time.time - lastDrop) > dropInterval)
         {
             GameObject newDanka = Instantiate(dankaPrefab);
 
             newDanka.transform.Translate(Random.Range(leftPoint, rightPoint), verticalPoint, 0);
 
-            lastDrop = Time.time;
+            dropping = false;
         }
 	}
+
+    public void NextDrop ()
+    {
+        dropping = true;
+        lastDrop = Time.time;
+    }
 }
