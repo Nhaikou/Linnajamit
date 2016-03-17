@@ -3,21 +3,20 @@ using System.Collections;
 
 public class Game : MonoBehaviour
     {
-        public GUIText scoreText;
+        private GUIText scoreText;
         private int score;
         public float timer;
         public int multiplier;
         public int newScoreValue;
-        public bool isHit;
         public bool gameOver;
         public bool restart;
         public bool exit;
         void Start()
         {
+            scoreText = null;
             score = 0;
             timer = 0;
             multiplier = 1;
-            isHit = false;
             gameOver = false;
             restart = false;
             exit = false;
@@ -25,33 +24,37 @@ public class Game : MonoBehaviour
         }
         public void GameController()
         {
-            while (!exit)
-            {
 
-            }
-
-            UpdateScore();
         }
         public void AddScore(int newScoreValue)
         {
             score += newScoreValue;
-            UpdateScore();
         }
         // Update is called once per frame
-        void UpdateScore()
+        public void Update()
         {
+            timer = Time.time;
             scoreText.text = "Score: " + score;
-            timer += 1;
             if (timer >= 10)
+            {
                 multiplier += 1;
+                timer = 0;
+            }
             // vaiko NumBlocks ???
 
             newScoreValue = 10 * multiplier;
-
-            if (isHit == true)
-                multiplier = 1;
-
+            
             AddScore(newScoreValue);
+        }
+    void OnGUI()
+        {
+            GUI.Label(new Rect(10, 10, 100, 100), scoreText.text);
+
+        }
+    public void IsHit()
+        {
+            multiplier = 1;
+            timer = 0;
         }
 }
 
