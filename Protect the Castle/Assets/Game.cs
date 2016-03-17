@@ -4,6 +4,7 @@ using System.Collections;
 public class Game : MonoBehaviour
     {
         private GUIText scoreText;
+        public string stringi;
         private int score;
         public float timer;
         public int multiplier;
@@ -20,12 +21,8 @@ public class Game : MonoBehaviour
             gameOver = false;
             restart = false;
             exit = false;
-            GameController();
         }
-        public void GameController()
-        {
 
-        }
         public void AddScore(int newScoreValue)
         {
             score += newScoreValue;
@@ -34,22 +31,27 @@ public class Game : MonoBehaviour
         public void Update()
         {
             timer = Time.time;
-            scoreText.text = "Score: " + score;
+
+            scoreText = GameObject.Find("GUI/txt-Score").GetComponent<GUIText>();
             if (timer >= 10)
             {
                 multiplier += 1;
                 timer = 0;
             }
-            // vaiko NumBlocks ???
 
             newScoreValue = 10 * multiplier;
             
             AddScore(newScoreValue);
+            UpdateScoreText();
+        }
+        void UpdateScoreText()
+        {
+            // update textfield with score
+            scoreText.text = score.ToString();
         }
     void OnGUI()
         {
-            GUI.Label(new Rect(10, 10, 100, 100), scoreText.text);
-
+            GUI.Label(new Rect(100, 20, 150, 150), score.ToString());
         }
     public void IsHit()
         {
