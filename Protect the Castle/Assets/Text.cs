@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Game : MonoBehaviour
+public class Text : MonoBehaviour
     {
-        private GUIText scoreText;
-        public string stringi;
         private int score;
         public float timer;
         public int multiplier;
@@ -14,7 +12,6 @@ public class Game : MonoBehaviour
         public bool exit;
         void Start()
         {
-            scoreText = null;
             score = 0;
             timer = 0;
             multiplier = 1;
@@ -30,28 +27,26 @@ public class Game : MonoBehaviour
         // Update is called once per frame
         public void Update()
         {
-            timer = Time.time;
-
-            scoreText = GameObject.Find("GUI/txt-Score").GetComponent<GUIText>();
-            if (timer >= 10)
+            
+            if ((Time.fixedTime - timer) >= 10)
             {
                 multiplier += 1;
-                timer = 0;
+                timer = Time.fixedTime;
             }
 
             newScoreValue = 10 * multiplier;
             
             AddScore(newScoreValue);
-            UpdateScoreText();
         }
-        void UpdateScoreText()
-        {
-            // update textfield with score
-            scoreText.text = score.ToString();
-        }
+
     void OnGUI()
         {
-            GUI.Label(new Rect(100, 20, 150, 150), score.ToString());
+            GUIStyle myStyle = new GUIStyle();
+            myStyle.fontSize = 26;
+            myStyle.normal.textColor = Color.white;
+
+            GUI.Label(new Rect(140, 60, 150, 150), multiplier.ToString(), myStyle);
+            GUI.Label(new Rect(100, 20, 150, 150), score.ToString(), myStyle);
         }
     public void IsHit()
         {
