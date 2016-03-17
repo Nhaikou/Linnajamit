@@ -2,61 +2,63 @@
 using System.Collections;
 
 public class Game : MonoBehaviour
+{
+    private GUIText scoreText;
+    private int score;
+    public float timer;
+    public int multiplier;
+    public int newScoreValue;
+    public bool gameOver;
+    public bool restart;
+    public bool exit;
+
+    void Start()
     {
-        private GUIText scoreText;
-        public string stringi;
-        private int score;
-        public float timer;
-        public int multiplier;
-        public int newScoreValue;
-        public bool gameOver;
-        public bool restart;
-        public bool exit;
-        void Start()
-        {
-            scoreText = null;
-            score = 0;
-            timer = 0;
-            multiplier = 1;
-            gameOver = false;
-            restart = false;
-            exit = false;
-        }
+        scoreText = null;
+        score = 0;
+        timer = 0;
+        multiplier = 1;
+        gameOver = false;
+        restart = false;
+        exit = false;
+        GameController();
+    }
 
-        public void AddScore(int newScoreValue)
+    public void GameController()
+    {
+
+    }
+
+    public void AddScore(int newScoreValue)
+    {
+        score += newScoreValue;
+    }
+
+    // Update is called once per frame
+    public void Update()
+    {
+        //scoreText.text = "Score: " + score.ToString();
+        if ((Time.time - timer) >= 1)
         {
-            score += newScoreValue;
-        }
-        // Update is called once per frame
-        public void Update()
-        {
+            multiplier += 1;
             timer = Time.time;
+        }
+        // vaiko NumBlocks ???
 
-            scoreText = GameObject.Find("GUI/txt-Score").GetComponent<GUIText>();
-            if (timer >= 10)
-            {
-                multiplier += 1;
-                timer = 0;
-            }
-
-            newScoreValue = 10 * multiplier;
+        newScoreValue = 10 * multiplier;
             
-            AddScore(newScoreValue);
-            UpdateScoreText();
-        }
-        void UpdateScoreText()
-        {
-            // update textfield with score
-            scoreText.text = score.ToString();
-        }
+        AddScore(newScoreValue);
+    }
+
     void OnGUI()
-        {
-            GUI.Label(new Rect(100, 20, 150, 150), score.ToString());
-        }
+    {
+        //GUI.Label(new Rect(10, 10, 100, 100), scoreText.text);
+    }
+
     public void IsHit()
-        {
-            multiplier = 1;
-            timer = 0;
-        }
+    {
+        multiplier = 1;
+        timer = Time.time;
+    }
 }
 

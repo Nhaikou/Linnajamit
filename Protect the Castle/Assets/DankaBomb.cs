@@ -32,15 +32,18 @@ public class DankaBomb : MonoBehaviour {
                 float distance = Vector2.Distance(transform.position, coltrans.position);
                 float force = (1 - (distance / radius)) * strength;
 
-                Vector2 direction = coltrans.position - transform.position;
-                direction.Normalize();
-
-                colbody.WakeUp();
-                colbody.AddForce(direction * force, ForceMode2D.Impulse);
-
-                if (colbody.CompareTag("Brick"))
+                if (force > 0)
                 {
-                    
+                    Vector2 direction = coltrans.position - transform.position;
+                    direction.Normalize();
+
+                    colbody.WakeUp();
+                    colbody.AddForce(direction * force, ForceMode2D.Impulse);
+
+                    if (colbody.CompareTag("Brick"))
+                    {
+                        Object.FindObjectOfType<Game>().IsHit();
+                    }
                 }
             }
         }
