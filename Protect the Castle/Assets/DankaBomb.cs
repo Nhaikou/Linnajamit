@@ -42,7 +42,7 @@ public class DankaBomb : MonoBehaviour {
 
                     if (colbody.CompareTag("Brick"))
                     {
-                        Object.FindObjectOfType<Game>().IsHit();
+                        Object.FindObjectOfType<Text>().IsHit();
                     }
                 }
             }

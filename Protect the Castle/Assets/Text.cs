@@ -51,7 +51,7 @@ public class Text : MonoBehaviour
     public void IsHit()
         {
             multiplier = 1;
-            timer = 0;
+            timer = Time.fixedTime;
         }
 }
 
